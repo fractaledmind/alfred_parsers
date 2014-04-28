@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 import sys
 import json
+import urllib
 import subprocess
 from workflow import Workflow
 
@@ -32,14 +33,13 @@ def _applescriptify(text):
 
 def set_clipboard(data):
     """Set clipboard to ``data``""" 
-    uni = unify(data).encode('utf-8')
     scpt = """
         set the clipboard to "{0}"
-    """.format(_applescriptify(uni))
+    """.format(_applescriptify(data))
     subprocess.call(['osascript', '-e', scpt])
 
 def prettify_parsing(text):
-    """Prepars pretty string of parsing data"""
+    """Prepares pretty string of parsing data"""
     parts = text.split(' ')
     
     txt = []
@@ -54,11 +54,24 @@ def prettify_parsing(text):
         txt += ['Syntax: ' + info]
     return '\n'.join(sorted(txt, reverse=True))
 
+def prettify_info(obj):
+    """Prepares pretty string of lemma information"""
+    txt = ['Definition:' + obj['definition']]
+    txt += ['Lemma: ' + obj['lemma']]
+    for link in obj['links']:
+        base_url = 'http://www.perseus.tufts.edu/hopper/text?doc='
+        html_link = urllib.quote(link[0])
+        url = base_url + html_link
+        md_link = '\t+ [' + link[1] + '](' + url + ')'
+        txt += [md_link]
+    return '\n'.join(sorted(txt, reverse=True))
+
+
 
 def main(wf):
 
     input_ = json.loads(wf.args[0])
-    #input_ = json.loads('["noun sg fem gen attic"]')
+    #input_ = json.loads('["noun sg fem acc"]')
 
     with open(wf.cachefile("parse_cache.json"), 'r') as file_:
         data = json.load(file_)
@@ -67,9 +80,13 @@ def main(wf):
     for item in data:
         for parsings in item['parsing_data']:
             if parsings == input_:
-                output = prettify_parsing(parsings)
+                pretty_parse = prettify_parsing(parsings)
+                pretty_info = prettify_info(item)
+                output = pretty_parse + '\n\n' + pretty_info
+
                 set_clipboard(output)
                 print "Parsing Data"
+                
 
 
 if __name__ == '__main__':

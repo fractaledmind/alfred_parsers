@@ -42,13 +42,21 @@ def scrape_perseus(query, lang):
     html = urllib.urlopen(perseus_url).read()
     soup = BeautifulSoup(html)
     parse_results = soup.find('div', {"id" : "main_col"})
-    parse_items = parse_results.findAll('div', {"class" : "analysis"})
+    parse_items = parse_results.find_all('div', {"class" : "analysis"})
 
     _data = []
     for item in parse_items:
         dct = {}
-        dct['lemma'] = item.h4.string.strip()
-        dct['definition'] = item.span.string.strip()
+        if item.h4.string != None:
+            dct['lemma'] = item.h4.string.strip()
+        else:
+            dct['lemma'] = 'missing value'
+
+        if item.span.string != None:
+            dct['definition'] = item.span.string.strip()
+        else:
+            dct['definition'] = 'missing value'
+
         dct['parsing_data'] = [p.string.strip() 
                         for p in item.table.find_all('td', {'class': None}) 
                         if p.get('style') == None]
@@ -83,7 +91,7 @@ def main(wf):
     """Parse input"""
     
     query = wf.args[0]
-    #query = 'νουθετήσεις'
+    #query = 'οἴου'
     input_ = unify(query)
     lang = get_language(input_)
     html_query = urllib.quote(input_.encode('utf-8'))
@@ -106,7 +114,7 @@ def main(wf):
 
 
     for item in data:
-        sub = item['lemma'] + ' | ' + item['definition']
+        sub = item['lemma'] + ' :: ' + item['definition']
         for parsings in item['parsing_data']:
             args = json.dumps(parsings)
             wf.add_item(parsings, 

@@ -18,8 +18,24 @@
 				<key>modifiersubtext</key>
 				<string></string>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>7E075BA4-EBC6-4EA8-8E1F-CA6D94FCB6E3</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string>Get Lexicon Data</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>5562C80F-F88C-494C-9A4E-3FF288848FA0</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Get Parsing Data</string>
+			</dict>
 		</array>
-		<key>94FED578-7483-4AA5-B928-9266C4070294</key>
+		<key>5562C80F-F88C-494C-9A4E-3FF288848FA0</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -29,7 +45,36 @@
 				<key>modifiersubtext</key>
 				<string></string>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A9DE486-94AB-49C3-803C-ACB766CB0966</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
 		</array>
+		<key>7E075BA4-EBC6-4EA8-8E1F-CA6D94FCB6E3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7E642A09-FF8F-4B83-83C7-C5DE7B874D53</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A9DE486-94AB-49C3-803C-ACB766CB0966</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>94FED578-7483-4AA5-B928-9266C4070294</key>
+		<array/>
 		<key>B57F18F8-BD34-4B55-A3BD-1E49AAA6EBCD</key>
 		<array>
 			<dict>
@@ -45,7 +90,7 @@
 	<key>createdby</key>
 	<string>Stephen Margheim</string>
 	<key>description</key>
-	<string>Greek and Latin Parsers (v. 1.0)</string>
+	<string>Greek and Latin Parsers (v. 1.1.1)</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -69,13 +114,15 @@
 				<false/>
 				<key>modsmode</key>
 				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
 			<string>B57F18F8-BD34-4B55-A3BD-1E49AAA6EBCD</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -97,31 +144,6 @@ end alfred_script</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Copied to Clipboard!</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>7E642A09-FF8F-4B83-83C7-C5DE7B874D53</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
@@ -133,6 +155,23 @@ end alfred_script</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>94FED578-7483-4AA5-B928-9266C4070294</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python actions.py "{query}" "lexicon"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>7E075BA4-EBC6-4EA8-8E1F-CA6D94FCB6E3</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -161,20 +200,83 @@ end alfred_script</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>title</key>
+				<string>Copied to Clipboard!</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>7E642A09-FF8F-4B83-83C7-C5DE7B874D53</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python actions.py "{query}" "parse"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>5562C80F-F88C-494C-9A4E-3FF288848FA0</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.output.largetype</string>
+			<key>uid</key>
+			<string>1A9DE486-94AB-49C3-803C-ACB766CB0966</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
+		<key>1A9DE486-94AB-49C3-803C-ACB766CB0966</key>
+		<dict>
+			<key>ypos</key>
+			<real>360</real>
+		</dict>
 		<key>4FF4FF41-0D12-4ADC-8581-8F95C39EFFD0</key>
 		<dict>
 			<key>ypos</key>
-			<real>140</real>
+			<real>250</real>
+		</dict>
+		<key>5562C80F-F88C-494C-9A4E-3FF288848FA0</key>
+		<dict>
+			<key>ypos</key>
+			<real>360</real>
+		</dict>
+		<key>7E075BA4-EBC6-4EA8-8E1F-CA6D94FCB6E3</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
 		</dict>
 		<key>7E642A09-FF8F-4B83-83C7-C5DE7B874D53</key>
 		<dict>
 			<key>ypos</key>
-			<real>140</real>
+			<real>250</real>
 		</dict>
 		<key>94FED578-7483-4AA5-B928-9266C4070294</key>
 		<dict>
